@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot name="myrobot">
+
+
+  <!-- Materials: -->
+  <material name="orange">
+    <color rgba="1 0.5 0.0 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+
+  <!-- Links and Joints: -->
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.2" radius="0.2"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <material name="orange"/>
+    </visual>
+  </link>
+
+
+  <link name="mid_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.1 0.1"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 0.3"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_mid" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0.0" upper="1.57" velocity="0.5"/>
+    <parent link="base_link"/>
+    <child link="mid_link"/>
+    <origin xyz="0 -0.22 0.1"/>
+  </joint>
+
+
+  <link name="wrist_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.1 0.1"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 0.3"/>
+      <material name="orange"/>
+    </visual>
+  </link>
+
+  <joint name="mid_to_wrist" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-0.75" upper="0.75" velocity="0.5"/>
+    <parent link="mid_link"/>
+    <child link="wrist_link"/>
+    <origin xyz="0 0.1 0.5"/>
+  </joint>
+
+
+  <link name="end-effector">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.2"/>
+      </geometry>
+      <origin rpy="0 1.57075 0" xyz="0 0 0"/>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <joint name="wrist_to_end-effector" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
+    <parent link="wrist_link"/>
+    <child link="end-effector"/>
+    <origin xyz="0 0 0.6"/>
+  </joint>
+
+</robot>
